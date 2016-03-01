@@ -16,3 +16,13 @@ export HISTTIMEFORMAT='%F %T '
 export LESS="-R"
 
 source ~/liquidprompt/liquidprompt
+
+# if seahorse or other is not working, use ssh-agent from openssh-client
+if [ -z $SSH_AUTH_SOCK ]
+then
+	eval $(ssh-agent)
+	ssh-add
+fi
+
+# ping default gateway
+alias ping_gw="ping -c 3 $(ip route list | awk '$0 ~ /default via/ {print $3}')"
