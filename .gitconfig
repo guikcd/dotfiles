@@ -1,0 +1,7 @@
+[user]
+	email = gui@iroqwa.org
+	name = Guillaume Delacour
+
+# as git-config(1), default since Git 1.8.4
+[color]
+	ui = always
