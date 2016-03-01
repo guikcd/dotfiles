@@ -26,3 +26,13 @@ fi
 
 # ping default gateway
 alias ping_gw="ping -c 3 $(ip route list | awk '$0 ~ /default via/ {print $3}')"
+
+# if tmux, use <host> in "ssh <host>" to rename current window
+if [ "$(ps -p $(ps -p $$ -o ppid=) -o comm=)" = "tmux" ]
+then
+	ssh() {
+	    tmux rename-window "$*"
+	    command ssh "$@"
+	    exit
+	}
+fi
