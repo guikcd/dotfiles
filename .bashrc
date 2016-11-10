@@ -18,11 +18,12 @@ export LESS="-R"
 source ~/liquidprompt/liquidprompt
 
 # if seahorse or other is not working, use ssh-agent from openssh-client
-if [ -z $SSH_AUTH_SOCK ]
-then
+if [ ! -S ~/.ssh/ssh_auth_sock ]; then
 	eval $(ssh-agent)
-	ssh-add
+	ln -sf "$SSH_AUTH_SOCK" ~/.ssh/ssh_auth_sock
 fi
+export SSH_AUTH_SOCK=~/.ssh/ssh_auth_sock
+ssh-add -l | grep --quiet "The agent has no identities" && ssh-add
 
 # ping default gateway
 alias ping_gw="ping -c 3 $(ip route list | awk '$0 ~ /default via/ {print $3}')"
